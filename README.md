@@ -1,6 +1,13 @@
-
 # TP-GoL
-Game of Life
+Trabalho de Tecnicas de Programação 1 - Game of Life
+
+#TODO - 03/10/2017
+Pessoa	|	Atribuicao
+--------|-------------
+José	|	Versão 02 - Controler
+Augusto	|	Versão 01 - Game Engine
+Fernando|	Criar classes da Game View
+Danilo	|	Versão 02 - Controler
 
 ## Desenvolvedores:
 Aluno | Username | Matrícula
