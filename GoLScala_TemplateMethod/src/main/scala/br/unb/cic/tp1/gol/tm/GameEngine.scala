@@ -129,13 +129,15 @@ abstract class GameEngine {
   }
   
   
-  /* verifica se uma celula deve ser mantida viva */
+  /* verifica se uma celula deve ser mantida viva
+   * sera implementado pelas classes de modo de jogo */
   def shouldKeepAlive(i: Int, j: Int): Boolean /*= {
     (cells(i)(j).isAlive) &&
       (numberOfNeighborhoodAliveCells(i, j) == 2 || numberOfNeighborhoodAliveCells(i, j) == 3)
   }*/
   
-  /* verifica se uma celula deve (re)nascer */
+  /* verifica se uma celula deve (re)nascer
+  * sera implementado pelas classes de modo de jogo*/
   def shouldRevive(i: Int, j: Int): Boolean /*= {
     (!cells(i)(j).isAlive) && 
       (numberOfNeighborhoodAliveCells(i, j) == 3)
