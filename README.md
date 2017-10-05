@@ -1,7 +1,7 @@
 # TP-GoL
 Trabalho de Tecnicas de Programação 1 - Game of Life
 
-#TODO - 03/10/2017
+# TODO - 03/10/2017
 Pessoa	|	Atribuicao
 --------|-------------
 José	|	Versão 02 - Controler
