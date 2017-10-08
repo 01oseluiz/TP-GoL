@@ -1,5 +1,6 @@
 package Source.GameController
 
+import GameRules.HighLife
 import Source.GameEngine._
 import Source.GameView._
 
@@ -12,8 +13,13 @@ import scala.collection.immutable.Stream.Empty
  */
 
 object GameController {
+
+  var GameEngine:GameEngine = _
   
   def start {
+    val teste = new HighLife
+    GameEngine = DependencyInjection.setRule("HighLife").asInstanceOf[GameEngine]
+    GameEngine.GameMode.GameEngine = GameEngine //Altera o valor do Atributo da classe EstrategiaDeDerivacao
     GameView.update
   }
 

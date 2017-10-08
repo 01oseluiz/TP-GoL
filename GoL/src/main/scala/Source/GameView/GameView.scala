@@ -20,10 +20,10 @@ object GameView {
 	private final val MAKE_CELL_ALIVE = 1
 	private final val NEXT_GENERATION = 2
 	private final val HALT = 3
-	
-  
-  
-  
+
+
+	val GameEngine: GameEngine = GameController.GameEngine
+
   /**
 	 * Atualiza o componente view (representado pela classe GameBoard),
 	 * possivelmente como uma resposta a uma atualiza��o do jogo.

@@ -1,5 +1,6 @@
 package Source.GameController
 
+import Source.GameEngine.GameEngine
 import org.springframework.context.annotation._
 import org.springframework.util.StringUtils
 
@@ -14,7 +15,7 @@ object DependencyInjection {
   /**
     * Gera lista de Classes Com Regras de Jogo
     */
-  context.getBeanDefinitionNames.drop(6).foreach(x => if (!x.equals("messagePrinter")) CLASS_NAMES :+= StringUtils.capitalize(x))
+  context.getBeanDefinitionNames.drop(6).foreach(x => if (!x.equals("gameEngine")) CLASS_NAMES :+= StringUtils.capitalize(x))
   context.close()
 
   def getClasses: Array[Any] = CLASS_NAMES
