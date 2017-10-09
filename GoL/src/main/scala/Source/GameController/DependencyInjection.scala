@@ -4,8 +4,8 @@ import org.springframework.context.annotation._
 import org.springframework.util.StringUtils
 
 object DependencyInjection {
-  private val PACKAGE_NAME : String = "GameRules"
   private val CLASS_INJECTION: String = "Source.GameEngine.GameEngine"
+  private val PACKAGE_NAME : String = "GameRules"
   private var CLASS_NAMES : Array[Any] = Array.empty
 
   var context = new AnnotationConfigApplicationContext()
@@ -19,6 +19,11 @@ object DependencyInjection {
 
   def getClasses: Array[Any] = CLASS_NAMES
 
+  def getPackageName : String = PACKAGE_NAME
+
+  /**
+    * ATUALEMNTE NAO UTILIZADO, INJECAO SENDO REALIZADA POR REFLECTION
+    */
   def setRule(Class_name:String): Any ={
     context = new AnnotationConfigApplicationContext()
     context.register(Class.forName(CLASS_INJECTION))

@@ -15,14 +15,15 @@ object GameView {
 	private final val LINE = "+-----+"
 	private final val DEAD_CELL = "|     |"
 	private final val ALIVE_CELL = "|  o  |"
-	
-	private final val INVALID_OPTION = 0
+
 	private final val MAKE_CELL_ALIVE = 1
 	private final val NEXT_GENERATION = 2
-	private final val HALT = 3
+	private final val CHANGE_RULES = 3
+	private final val HALT = 4
 
 
-	val GameEngine: GameEngine = GameController.GameEngine
+	private var GameEngine:GameEngine = _
+	def UpdateGameEngine(x:GameEngine) = GameEngine = x
 
   /**
 	 * Atualiza o componente view (representado pela classe GameBoard),
@@ -51,18 +52,42 @@ object GameView {
 	    println("Select one of the options: \n \n"); 
 			println("[1] Make a cell alive");
 			println("[2] Next generation");
-			println("[3] Halt");
+			println("[3] Change Rules");
+			println("[4] Halt");
 		
 			print("\n \n Option: ");
 			
-			option = parseOption(readLine)
+			option = readInt
 	  }while(option == 0)
 	  
 	  option match {
       case MAKE_CELL_ALIVE => makeCellAlive
       case NEXT_GENERATION => nextGeneration
+			case CHANGE_RULES => GameController.changeRules
       case HALT => halt
+			case _ => printOptions
     }
+	}
+
+	/**
+		* Função TEMPORARIA
+		*/
+	def chooseRules(Rules: Array[Any]): Any ={
+		println
+
+		var i=0
+		Rules.foreach {x =>
+			print("["+i.toString+"] ")
+			i+=1
+			print(x + "\t")
+			if(i%4 == 0) println
+		}
+		println
+
+		print("Digite um valor de 0 a " + (Rules.size-1).toString + ": ")
+		val Entrada = readInt()
+
+		if (Entrada < (Rules).size && Entrada >= 0) Rules(Entrada) else chooseRules(Rules)
 	}
   
   private def makeCellAlive {
@@ -90,14 +115,6 @@ object GameView {
 		println(j);
 		i >= 0 && i < GameEngine.height && j >= 0 && j < GameEngine.width
 	}
-  
-	def parseOption(option: String): Int = option match {
-    case "1" => MAKE_CELL_ALIVE
-    case "2" => NEXT_GENERATION
-    case "3" => HALT
-    case _ => INVALID_OPTION
-  }
-	
   
   /* Imprime uma linha usada como separador das linhas do tabuleiro */
 	private def printLine() {

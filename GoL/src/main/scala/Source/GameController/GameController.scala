@@ -1,6 +1,5 @@
 package Source.GameController
 
-import GameRules.HighLife
 import Source.GameEngine._
 import Source.GameView._
 
@@ -14,11 +13,26 @@ import scala.collection.immutable.Stream.Empty
 
 object GameController {
 
-  var GameEngine:GameEngine = _
+  val Rules_List:Array[Any] = DependencyInjection.getClasses
+  val Package_N : String = DependencyInjection.getPackageName
+  var GameEngine:GameEngine = new GameEngine
+
+  GameView.UpdateGameEngine(GameEngine)
   
   def start {
-    GameEngine = DependencyInjection.setRule("Classic").asInstanceOf[GameEngine]
+    GameEngine.GameMode = Class.forName(Package_N +"."+ Rules_List(0).toString).newInstance.asInstanceOf[EstrategiaDeDerivacao]
     GameEngine.GameMode.UpdateGameEngine(GameEngine)
+    GameView.update
+  }
+
+  def changeRules: Unit ={
+    val Rule:String = GameView.chooseRules(DependencyInjection.getClasses).toString
+
+    GameEngine.GameMode = Class.forName(Package_N +"."+ Rule).newInstance.asInstanceOf[EstrategiaDeDerivacao]
+    GameEngine.GameMode.UpdateGameEngine(GameEngine)
+
+    println("\nRule: " + Rule + " is Activated!")
+    Thread.sleep(1000)
     GameView.update
   }
 
