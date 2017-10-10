@@ -38,7 +38,7 @@ object GameView {
 		    print(if (GameEngine.isCellAlive(i, j))  ALIVE_CELL else DEAD_CELL);
 		  }
 		  println("   " + i)
-		  printLine
+		  printLine()
 		}
 		printOptions
 	}
@@ -49,13 +49,13 @@ object GameView {
 	  println("\n\n")
 	  
 	  do{
-	    println("Select one of the options: \n \n"); 
-			println("[1] Make a cell alive");
-			println("[2] Next generation");
-			println("[3] Change Rules");
-			println("[4] Halt");
+	    println("Select one of the options: \n \n")
+			println("[1] Make a cell alive")
+			println("[2] Next generation")
+			println("[3] Change Rules")
+			println("[4] Halt")
 		
-			print("\n \n Option: ");
+			print("\n \n Option: ")
 			
 			option = readInt
 	  }while(option == 0)
@@ -79,8 +79,8 @@ object GameView {
 		Rules.foreach {x =>
 			print("["+i.toString+"] ")
 			i+=1
-			print(x + "\t")
-			if(i%4 == 0) println
+			print(x + "\t\t\t")
+			if(i%2 == 0) println
 		}
 		println
 

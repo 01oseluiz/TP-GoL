@@ -6,7 +6,7 @@ package Source.GameEngine
 
 trait EstrategiaDeDerivacao {
 
-  var GameEngine: GameEngine = _
+  protected var GameEngine: GameEngine = _
   def UpdateGameEngine(x:GameEngine):Unit = GameEngine = x
 
   def shouldKeepAlive(i: Int, j: Int): Boolean

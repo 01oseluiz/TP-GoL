@@ -4,8 +4,8 @@ import org.springframework.context.annotation._
 import org.springframework.util.StringUtils
 
 object DependencyInjection {
-  private val CLASS_INJECTION: String = "Source.GameEngine.GameEngine"
-  private val PACKAGE_NAME : String = "GameRules"
+  private final val CLASS_INJECTION: String = "Source.GameEngine.GameEngine"
+  private final val PACKAGE_NAME : String = "GameRules"
   private var CLASS_NAMES : Array[Any] = Array.empty
 
   var context = new AnnotationConfigApplicationContext()

@@ -13,9 +13,9 @@ import scala.collection.immutable.Stream.Empty
 
 object GameController {
 
-  val Rules_List:Array[Any] = DependencyInjection.getClasses
-  val Package_N : String = DependencyInjection.getPackageName
-  var GameEngine:GameEngine = new GameEngine
+  private val Rules_List:Array[Any] = DependencyInjection.getClasses
+  private val Package_N : String = DependencyInjection.getPackageName
+  private val GameEngine:GameEngine = new GameEngine
 
   GameView.UpdateGameEngine(GameEngine)
   
