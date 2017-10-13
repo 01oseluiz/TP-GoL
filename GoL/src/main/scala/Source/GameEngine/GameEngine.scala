@@ -2,13 +2,13 @@ package Source.GameEngine
 
 import Source.GameController._
 import Source.Main
-
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 import scala.collection.mutable.ListBuffer
 import scala.util.control.TailCalls.TailRec
 import scala.annotation.tailrec
+import scala.collection.mutable
 /**
   * Representa a Game Engine do GoL
   *
@@ -20,7 +20,9 @@ class GameEngine {
   val height = Main.height
   val width = Main.width
 
-  val cells = Array.ofDim[Cell](height, width)
+  var cells = Array.ofDim[Cell](height, width)
+
+  val stateStack = new mutable.ArrayStack[Array[Array[Cell]]]
 
   @Autowired
   var GameMode:EstrategiaDeDerivacao = _
@@ -155,14 +157,30 @@ class GameEngine {
 	 */
   def numberOfNeighborhoodAliveCells(i: Int, j: Int): Int = {
     var alive = 0
+    var posy = 0
+    var posx = 0
     for(a <- (i - 1 to i + 1)) {
       for(b <- (j - 1 to j + 1)) {
-        if (validPosition(a, b)  && (!(a==i && b == j)) && cells(a)(b).isAlive) {
-          alive += 1
+        if (validPosition(a, b)) {
+          if (!(a==i && b==j) && cells(a)(b).isAlive) alive += 1
+        }
+        else {
+          posy = a
+          posx = b
+          if (a == -1) posy = height - 1
+          else if (a == height) posy = 0
+          if (b == -1) posx = width - 1
+          else if (b == width) posx = 0
+          if (cells(posy)(posx).isAlive) alive += 1
         }
       }
     }
     alive
+  }
+  def saveState: Unit = stateStack += cells
+
+  def undo: Unit = {
+    cells = stateStack.pop()
   }
 
 }
