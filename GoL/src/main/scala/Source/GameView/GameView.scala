@@ -18,8 +18,10 @@ object GameView {
 
 	private final val MAKE_CELL_ALIVE = 1
 	private final val NEXT_GENERATION = 2
-	private final val CHANGE_RULES = 3
-	private final val HALT = 4
+	private final val AUTO_GENERATION = 3
+	private final val CHANGE_RULES = 4
+	private final val UNDO = 5
+	private final val HALT = 6
 
 
 	private var GameEngine:GameEngine = _
@@ -29,7 +31,7 @@ object GameView {
 	 * Atualiza o componente view (representado pela classe GameBoard),
 	 * possivelmente como uma resposta a uma atualiza��o do jogo.
 	 */
-	def update {
+	def update(Continuo:Boolean = false) {
 		printFirstRow
 		printLine
 		
@@ -40,7 +42,7 @@ object GameView {
 		  println("   " + i)
 		  printLine()
 		}
-		printOptions
+		if (!Continuo) printOptions
 	}
   
   private def printOptions {
@@ -52,8 +54,10 @@ object GameView {
 	    println("Select one of the options: \n \n")
 			println("[1] Make a cell alive")
 			println("[2] Next generation")
-			println("[3] Change Rules")
-			println("[4] Halt")
+			println("[3] Auto generation")
+			println("[4] Change Rules")
+			println("[5] Undo")
+			println("[6] Halt")
 		
 			print("\n \n Option: ")
 			
@@ -63,10 +67,24 @@ object GameView {
 	  option match {
       case MAKE_CELL_ALIVE => makeCellAlive
       case NEXT_GENERATION => nextGeneration
+			case AUTO_GENERATION => AutoGeneration
 			case CHANGE_RULES => GameController.changeRules
+			case UNDO => GameController.Undo
       case HALT => halt
 			case _ => printOptions
     }
+	}
+
+	def AutoGeneration: Unit ={
+		print("Digite a quantidade de gerações a serem realizadas: ")
+		var entrada = readInt
+
+		while (entrada > 1) {
+			GameController.AutoRun
+			entrada -= 1
+			Thread.sleep(1000)
+		}
+		nextGeneration
 	}
 
 	/**

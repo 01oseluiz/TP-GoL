@@ -22,7 +22,7 @@ class GameEngine {
 
   var cells = Array.ofDim[Cell](height, width)
 
-  val stateStack = new mutable.ArrayStack[Array[Array[Cell]]]
+  var stateStack = new mutable.ArrayStack[Array[Array[Cell]]]
 
   @Autowired
   var GameMode:EstrategiaDeDerivacao = _
@@ -47,7 +47,9 @@ class GameEngine {
     * c) em todos os outros casos a celula morre ou continua morta.
     */
 
-  def nextGeneration {
+  def nextGeneration() {
+
+    saveState
 
     val mustRevive = new ListBuffer[Cell]
     val mustKill = new ListBuffer[Cell]
@@ -63,7 +65,6 @@ class GameEngine {
       }
     }
 
-
     for(cell <- mustRevive) {
       cell.revive
       Statistics.recordRevive
@@ -73,8 +74,6 @@ class GameEngine {
       cell.kill
       Statistics.recordKill
     }
-
-
   }
 
   /*
@@ -94,6 +93,8 @@ class GameEngine {
     */
   @throws(classOf[IllegalArgumentException])
   def makeCellAlive(i: Int, j: Int) = {
+    saveState
+
     if(validPosition(i, j)){
       cells(i)(j).revive
       Statistics.recordRevive
@@ -137,21 +138,7 @@ class GameEngine {
     }
   }
 
-
-  /* verifica se uma celula deve ser mantida viva */
-  /*def shouldKeepAlive(i: Int, j: Int): Boolean = {
-    (cells(i)(j).isAlive) &&
-      (numberOfNeighborhoodAliveCells(i, j) == 2 || numberOfNeighborhoodAliveCells(i, j) == 3)
-  }
-
-  /* verifica se uma celula deve (re)nascer */
-  def shouldRevive(i: Int, j: Int): Boolean = {
-    (!cells(i)(j).isAlive) &&
-      (numberOfNeighborhoodAliveCells(i, j) == 3)
-  }*/
-
-
-  /*
+  /**
 	 * Computa o numero de celulas vizinhas vivas, dada uma posicao no ambiente
 	 * de referencia identificada pelos argumentos (i,j).
 	 */
@@ -177,10 +164,25 @@ class GameEngine {
     }
     alive
   }
-  def saveState: Unit = stateStack += cells
+  def saveState: Unit = {
+    if (stateStack.size <10) stateStack += copy(cells)
+    else stateStack(0) = copy(cells)
+  }
+
+  def copy(x: Array[Array[Cell]]): Array[Array[Cell]] ={
+    val out_x = Array.ofDim[Cell](height, width)
+
+    for(i <- (0 until height)) {
+      for(j <- (0 until width)) {
+        out_x(i)(j) = new Cell
+        if(x(i)(j).isAlive) out_x(i)(j).revive
+      }
+    }
+    out_x
+  }
 
   def undo: Unit = {
-    cells = stateStack.pop()
+    if (stateStack.size > 0) cells = stateStack.pop()
   }
 
 }

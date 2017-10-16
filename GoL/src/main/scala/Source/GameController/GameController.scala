@@ -22,7 +22,12 @@ object GameController {
   def start {
     GameEngine.GameMode = Class.forName(Package_N +"."+ Rules_List(0).toString).newInstance.asInstanceOf[EstrategiaDeDerivacao]
     GameEngine.GameMode.UpdateGameEngine(GameEngine)
-    GameView.update
+    GameView.update()
+  }
+
+  def Undo: Unit = {
+    GameEngine.undo
+    GameView.update()
   }
 
   def changeRules: Unit ={
@@ -33,7 +38,7 @@ object GameController {
 
     println("\nRule: " + Rule + " is Activated!")
     Thread.sleep(1000)
-    GameView.update
+    GameView.update()
   }
 
   def halt() {
@@ -46,7 +51,7 @@ object GameController {
   def makeCellAlive(i: Int, j: Int) {
     try {
 			GameEngine.makeCellAlive(i, j)
-			GameView.update
+			GameView.update()
 		}
 		catch {
 		  case ex: IllegalArgumentException => {
@@ -57,7 +62,11 @@ object GameController {
   
   def nextGeneration {
     GameEngine.nextGeneration
-    GameView.update
+    GameView.update()
   }
-  
+
+  def AutoRun {
+    GameEngine.nextGeneration
+    GameView.update(true)
+  }
 }
