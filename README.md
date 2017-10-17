@@ -1,13 +1,11 @@
 # TP-GoL
 Trabalho de Tecnicas de Programação 1 - Game of Life
 
-# TODO - 03/10/2017
-Pessoa	|	Atribuicao
---------|-------------
-José	|	Versão 02 - Controler
-Augusto	|	Versão 01 - Game Engine
-Fernando|	Criar classes da Game View
-Danilo	|	Versão 02 - Controler
+# Versões
+-GoLScala_Origin: Versão original do jogo
+-GoLScala_Strategy: Versão utilizando o método Strategy
+-GoLScala_TemplateMethod: Versão utilizando o método Template
+-GoL: Versão final, com injeção de dependencia utilizando Strategy, Undo, Mundo infinito e Auto-Geração
 
 ## Desenvolvedores:
 Aluno | Username | Matrícula
